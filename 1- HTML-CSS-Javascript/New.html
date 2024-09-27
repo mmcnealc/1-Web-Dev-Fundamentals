@@ -1,0 +1,11 @@
+[user]
+  name = Christopher Kennedy
+  email = christopher6121080@gmail.com
+[core]
+  autocrlf = input
+  editor = code--wait
+[Filter "lfs"]
+  clean = git-lfs clean -- %d
+  smudge = git-lfs smudge --%f
+  process = gitlfs filter-process
+  required = true

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Survey Form</title>      
+        <link rel="stylesheet" href="css/survey.css"/>
+  </head>
+  <body>
+      <h1> Survey</h1>
+        <form class="survey-form" action="https://learn.nucamp.co/show_everything.php"
+         method="post">
+            <fieldset>
+                 <legend> Your Information</legend>
+                 <div>
+                    <label for="Firstname">First name:</label>
+                    <input type="text" name="firstname" placeholder="Your first name"/>
+                 </div>
+                 <div>
+                    Last name: <input type="text" name="lasttname" placeholder="Your last name"/>
+                 </div>
+                 <div>
+                    Your Email: <input type="email" name="email" placeholder="Your email Address"/>
+                 </div>
+            </fieldset>
+            <fieldset>
+                 <legend>Survey Questions</legend>
+                 <div>
+                    Favorite sport:  
+                     <input type="Radio"   name="Sport"   value="Baseball"/>Baseball
+                     <input type="Radio"   name="Sport"   value="Rugby"/> Rugby
+                     <input type="Radio"   name="Sport"   value="Snowboarding"/>Snowboarding
+                 </div>
+                 <div>
+                    Favorite Pets
+                    <input type="Checkbox"    name="pets"     value="cats"/> Cats
+                    <input type="Checkbox"    name="pets"     value="dogs"/> Dogs
+                    <input type="Checkbox"    name="pets"     value="iguana"/> Iguana 
+                 </div>
+            </fieldset>
+            <input type="submit" id="submit-btn"/>             
+         </form>
+  </body>
+</html>

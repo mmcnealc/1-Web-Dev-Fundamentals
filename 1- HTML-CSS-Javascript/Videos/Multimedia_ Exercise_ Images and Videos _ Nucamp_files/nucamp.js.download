@@ -1,0 +1,109 @@
+console.log("NucampJS Loaded");
+function nucamppopup(url, title, w, h) {
+    if (w === undefined) {w = '750'};
+    if (h === undefined) {h = '650'};
+
+    // Fixes dual-screen position
+    var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+    var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+
+    var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+    var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+    var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+    var top = ((height / 2) - (h / 2)) + dualScreenTop;
+    var newWindow = window.open(url, title, 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left + ', menubar=no, resizable=no, status=yes, titlebar=no, toolbar=no, scrollbars=no');
+
+    // Puts focus on the newWindow
+    if (window.focus) {
+        newWindow.focus();
+    }
+}
+
+$(document).ready(function() {
+    try {
+        $("[href='https://www.nucamp.co/profile']").html("<i class='fa fa-life-ring'></i> Billing");
+        $("[href='https://url.nucamp.co/swag']").html("<i class='fa fa-shopping-cart'></i> Swag Shop");
+        $("[href='http://support.nucamp.co']").html("<i class='fa fa-question-circle'></i> Help");
+        $(".block_messageteacher").find("h2").html("My Instructor");
+        $(".modified").filter(":contains('Last modified')").remove();
+        $(".box, .generalbox, .boxaligncenter").filter(":contains('Time to Skype')").remove();
+        $('a[href="#myoverview_courses_view_past"]').html("Completed");
+        $(".messageteacher_link").each(function() {
+            $(this).removeAttr("href");
+        });
+        $("li[data-key='competencies']").remove();
+        $(":contains('Delete All')").closest('button').remove();
+        $(":contains('Prevent submission changes')").closest("a").each((index, el) => {
+            $(el).remove();
+        });
+        // $(":contains('Preview questions')").closest('.navitem').remove();
+        const reviewQuestions = $("a:contains('Preview questions')");
+        if (reviewQuestions.length > 0) {
+            const reviewQuestionsUrl = $(reviewQuestions).attr("href").replace("print.php", "analysis.php");
+            $(reviewQuestions).text("Review the results");
+            $(reviewQuestions).attr("href", reviewQuestionsUrl);
+        }
+        $(":contains('Submitted answers')").closest('a').addClass("btn btn-primary");
+
+        $("label").filter(function() {
+            return $(this).text().trim() === "Enrolment key";
+        }).text("Enrollment key");
+        $("h2").filter(function() {
+            return $(this).text().trim() === "Enrolment options";
+        }).text("Enrollment");
+        $("span[itemprop='title']").filter(function() {
+            return $(this).text().trim() === "Enrol me in this course";
+        }).text("Enroll me in this course");
+        $("span[tabindex='0']").filter(function() {
+            return $(this).text().trim() === "Enrolment options";
+        }).text("Enrollment options");
+        $("input[value='Enrol me']").attr("value", "Enroll me");
+        if (!window.location.href.includes("/course/")) {
+            $(".secondary-navigation").remove();
+        }
+        const reviewOfNucamp = $("h2:contains('Provide Your Review of Nucamp')").parent().find('button[data-activityname="Provide Your Review of Nucamp"]');
+        if (reviewOfNucamp.length > 0) {
+            $(reviewOfNucamp).parent().parent().remove();
+        }
+        // Change the icons in the Cybersecurity Course
+        $('.activity-grid').each(function() {
+            // Find the anchor tag within the .activityname div
+            var $span = $(this).find('.activityname a .instancename');
+
+            // Check if the text within the anchor tag starts with 'Labs: '
+            if ($span.text().trim().startsWith('Lab:')) {
+                // Find the img tag within the .activity-icon div
+                var $img = $(this).find('.activity-icon img');
+                var $parentDiv = $img.closest('.activity-icon');
+                
+                // Change the src attribute of the img tag
+                $img.attr('src', 'https://learn.nucamp.co/theme/image.php/adaptable/forum/1712931861/monologo?filtericon=1');
+                // Change the background color
+                $parentDiv.removeClass('content').addClass('collaboration')
+            }
+        });
+        // Find the button with the attribute data-toggler="drawers" and simulate a click
+        setTimeout(() => {
+            const $button = $('.sr-only').filter(":contains('Open block drawer')");
+            // Find the nearest div to the button
+            var $nearestDiv = $button.closest('div');
+            
+            // Get the computed style of the nearest div
+            var displayProperty = window.getComputedStyle($nearestDiv[0]).display;
+
+            if(window.location.href.includes("/book/")) {
+                // Check if the display property is not 'none'
+                if(displayProperty !== 'none') {
+                    $button.click();
+                }
+            } else if (!window.location.href.includes("/book/") && displayProperty === 'none') {
+                $button.click();
+            }
+            // $('body').focus().click();
+        }, 2000)
+    } catch (err) {
+        console.error(err);
+    }
+
+});
